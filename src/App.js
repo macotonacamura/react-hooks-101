@@ -1,23 +1,29 @@
-import React, {useState} from 'react'
-
+import React, { useState, useEffect } from 'react'
+//コールバックの設定ができるのがuseEffect
 const App = props => {
-//useStateは個々の値だけじゃなく、オブジェクトを持つこともできる
   const [state, setState] = useState(props)
-  const { name, price } = state //state.priceと書かなくて良くなる (分割代入)
-  // const [name, setName] = useState(props.name) いらなくなる
-  // const [price, setPrice] = useState(props.price) いらなくなる
+  const { name, price } = state
 
-  // const reset = () => setState(props) //setState(props)だけで、上2行の役割を果たす ⇨ 関数自体短いからonClick={}内に処理を書いちゃう
-    // setPrice(props.price) いらない
-    // setName(props.name)　いらない
+  useEffect(() => { //useEffectはrendering(<></>)の後で実行されている
+    console.log('This is like componentDidMount or componentDidUpdate')
+  }) //変更があるたびに何回もrenderingされてしまう
 
-  return ( //onClick={この中に関数を書いてもOK}
+  useEffect(() => { //useEffectはrendering(<></>)の後で実行されている
+    console.log('This is like componentDidMount')
+  },[])//ページ開いた時だけrenderingされる
+
+  useEffect(() => { //useEffectはrendering(<></>)の後で実行されている
+    console.log('This callback is for name only')
+  },[name])//特定のパラメーターの描画時、または変更時のみ実行
+
+
+  return (
     <>
-      <p>現在の{state.name}は{state.price}円です</p>
+      <p>現在の{state.name}は{state.price}円です。</p>
       <button onClick={() => setState({...state, price: price + 1})}>+1</button>
       <button onClick={() => setState({...state, price: price - 1})}>-1</button>
       <button onClick={() => setState(props)}>Reset</button>
-      <input value={name} onChange={e => setState({...state, name: e.target.value})}/> //setStateの引数はオブジェクトだから、{}で囲う。...stateでstateを展開して、nameをアップデート。
+      <input value={name} onChange={e => setState({...state, name: e.target.value})}/>
     </>
   )
 }
