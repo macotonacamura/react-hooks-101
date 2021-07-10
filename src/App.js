@@ -1,6 +1,7 @@
 import React from 'react'
 
-const App = () {
+
+const App = () => {
   return (
     <div>
       This is a templete for react app.
