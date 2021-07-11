@@ -40,6 +40,8 @@
 // 状態として存在する最後の要素のidが3だからプラス1して4にしてあげる
 
 
+
+//イベント作成後、削除ボタン押下後、全削除押下後、どんなデータを返すのか？ ⇨ それをApp.jsにて反映させる
 const events = (state = [], action) => { //イベントを管理する関数定義
 	switch(action.type){
 		case 'CREATE_EVENT':
@@ -48,7 +50,7 @@ const events = (state = [], action) => { //イベントを管理する関数定�
 		const id = length === 0 ? 1 : state[length -1 ].id + 1 //このlength - 1は-1することによって最後の要素を取り出すことができる
 			return [...state, {id, ...event}] // [...stateで今あるstateを展開、{要素を追加}]
 		case 'DELETE_EVENT':
-			return state
+			return state.filter(event => event.id !== action.id) //削除ボタンで選択された項目以外のものを抽出したい
 		case 'DELETE_ALL_EVENT':
 			return []
 		default:
@@ -56,7 +58,7 @@ const events = (state = [], action) => { //イベントを管理する関数定�
 	}
 }
 
-export default events //コンポーネントが利用からexportする
+export default events //コンポーネント利用からexportする
 
 
 // if(length === 0){
