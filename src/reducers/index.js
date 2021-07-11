@@ -51,7 +51,7 @@ const events = (state = [], action) => { //イベントを管理する関数定�
 			return [...state, {id, ...event}] // [...stateで今あるstateを展開、{要素を追加}]
 		case 'DELETE_EVENT':
 			return state.filter(event => event.id !== action.id) //削除ボタンで選択された項目以外のものを抽出したい
-		case 'DELETE_ALL_EVENT':
+		case 'DELETE_ALL_EVENTS':
 			return []
 		default:
 			return state

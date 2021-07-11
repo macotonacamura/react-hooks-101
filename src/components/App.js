@@ -15,9 +15,17 @@ const App = () => {
 			title,
 			body
 		})
-	setTitle('') //dispatchを呼んだら空にする
-	setBody('') //dispatchを呼んだら空にする
+		setTitle('') //dispatchを呼んだら空にする
+		setBody('') //dispatchを呼んだら空にする
 	}
+
+	const deleteAllEvents = e => {
+		e.preventDefault()
+		const result = window.confirm('全てのインベントを本当に削除しても良いですか？')
+		if (result)	dispatch({ type: 'DELETE_ALL_EVENTS' }) //resultがtrueの場合にdispatchを実行
+	}
+
+	const unCreatable = title === '' || body === '' //disabled={unCreatable}でtrue false判定をしてボタンが有効かどうか判断。空の時は押せない
 
 
   return (
@@ -33,8 +41,8 @@ const App = () => {
     			<label htmlFor="formEventBody">Body</label>
     			<textarea className="form-control" id="formEventBody" value={body} onChange={e => setBody(e.target.value)} />
     		</div>
-    	<button className="btn btn-primary" onClick={addEvent}>イベントを作成する</button>
-    	<button className="btn btn-danger">全てのイベントを削除する</button>
+    	<button className="btn btn-primary" onClick={addEvent} disabled={unCreatable}>イベントを作成する</button>
+    	<button className="btn btn-danger" onClick={deleteAllEvents} disabled={state.length === 0 }>全てのイベントを削除する</button>
     	</form>
 
     	<h4>イベント一覧</h4>
