@@ -1,4 +1,8 @@
 import React,{ useState } from 'react'
+import {
+    CREATE_EVENT,
+    DELETE_ALL_EVENTS
+} from '../actions'
 
 const EventForm = ({ state, dispatch }) => {
     // const [state, dispatch] = useReducer(reducer, []) //reducerで扱うものはイベント一覧[] //状態遷移をさせたいタイミング(onClick{addEvent})でdispatchを呼んでアクションを渡してあげる
@@ -8,7 +12,7 @@ const EventForm = ({ state, dispatch }) => {
     const addEvent = e => {
         e.preventDefault() //画面全体でリロードするのを防ぐ。addEventにだけリロード適用される
         dispatch({
-            type: 'CREATE_EVENT',
+            type: CREATE_EVENT,
             title,
             body
         })
@@ -19,7 +23,7 @@ const EventForm = ({ state, dispatch }) => {
     const deleteAllEvents = e => {
         e.preventDefault()
         const result = window.confirm('全てのインベントを本当に削除しても良いですか？')
-        if (result) dispatch({ type: 'DELETE_ALL_EVENTS' }) //resultがtrueの場合にdispatchを実行
+        if (result) dispatch({ type: DELETE_ALL_EVENTS }) //resultがtrueの場合にdispatchを実行
     }
 
     const unCreatable = title === '' || body === '' //disabled={unCreatable}でtrue false判定をしてボタンが有効かどうか判断。空の時は押せない
