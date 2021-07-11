@@ -1,21 +1,38 @@
-import React from 'react'
+import React,{ useReducer, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import reducer from '../reducers'
 
 const App = () => {
+	const [state, dispatch] = useReducer(reducer, []) //reducerで扱うものはイベント一覧[] //状態遷移をさせたいタイミング(onClick{addEvent})でdispatchを呼んでアクションを渡してあげる
+	const [title, setTitle] = useState('')
+	const [body, setBody] = useState('')
+
+	const addEvent = e => {
+		e.preventDefault() //画面全体でリロードするのを防ぐ。addEventにだけリロード適用される
+		dispatch({
+			type: 'CREATE_EVENT',
+			title,
+			body
+		})
+	setTitle('') //dispatchを呼んだら空にする
+	setBody('') //dispatchを呼んだら空にする
+	}
+
+
   return (
     <div className="container-fluid">
     	<h4>イベント作成フォーム</h4>
     	<form>
     		<div className="form-group">
-    			<label htmlFor="formEventTitle">タイトル</label>
-    			<input className="form-control" id="formEventTitle" />
+    			<label htmlFor="formEventTitle">Title</label>
+    			<input className="form-control" id="formEventTitle" value={title} onChange={e => setTitle(e.target.value)} />
     		</div>
 
     		<div className="form-group">
-    			<label htmlFor="formEventBody">タイトル</label>
-    			<textarea className="form-control" id="formEventBody" />
+    			<label htmlFor="formEventBody">Body</label>
+    			<textarea className="form-control" id="formEventBody" value={body} onChange={e => setBody(e.target.value)} />
     		</div>
-    	<button className="btn btn-primary">イベントを作成する</button>
+    	<button className="btn btn-primary" onClick={addEvent}>イベントを作成する</button>
     	<button className="btn btn-danger">全てのイベントを削除する</button>
     	</form>
 
