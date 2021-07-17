@@ -9,7 +9,10 @@ import reducer from '../reducers'
 
 
 const App = () => {
-	const [state, dispatch] = useReducer(reducer, []) //reducerで扱うものはイベント一覧[] //状態遷移をさせたいタイミング(onClick{addEvent})でdispatchを呼んでアクションを渡してあげる
+	const initialState = {
+		events: []
+	}
+	const [state, dispatch] = useReducer(reducer, initialState) //reducerで扱うものはイベント一覧[] //状態遷移をさせたいタイミング(onClick{addEvent})でdispatchを呼んでアクションを渡してあげる
   return (
   	<AppContext.Provider value={{state, dispatch}}>
 	    <div className="container-fluid">
